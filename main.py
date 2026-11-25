@@ -1,19 +1,25 @@
+"""Write the competition entry: one sentence that could have replaced
+an entire pointless meeting, to /output/entry.txt."""
+
 import os
 
-ENTRY = "Gary called a meeting to ask why morale was low, and got fired in it while nobody in the room said a word."
-
-OUT_PATH = "/output/entry.txt"
+ENTRY = (
+    # One sentence, plain office English, no setup: the decision is made,
+    # it is written down, and the meeting exists only because nobody read it.
+    "It's already decided, it's already in the document, and the only "
+    "reason we're still sitting here is that nobody read the document."
+)
 
 
 def main():
-    text = ENTRY.strip()
-    if not text or len(text) > 200:
-        raise SystemExit("entry failed the 1-200 character gate")
-    if "\n" in text:
-        raise SystemExit("entry must be a single line")
-    os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
-    with open(OUT_PATH, "w", encoding="utf-8", newline="") as handle:
-        handle.write(text)
+    entry = ENTRY.strip()
+    if not entry or len(entry) > 200:
+        raise SystemExit("entry fails gate: must be 1-200 characters")
+    if "\n" in entry or "\r" in entry:
+        raise SystemExit("entry fails gate: must be a single line")
+    os.makedirs("/output", exist_ok=True)
+    with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
+        f.write(entry)
 
 
 if __name__ == "__main__":
